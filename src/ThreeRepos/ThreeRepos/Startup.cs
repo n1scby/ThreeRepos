@@ -40,7 +40,9 @@ namespace ThreeRepos
 
             services.AddMvc();
 
-            services.AddScoped<IResortRepository, ResortRepositoryMemory>();
+             //    services.AddScoped<IResortRepository, ResortRepositoryMemory>();
+                services.AddScoped<IResortRepository, ResortRepositoryADO>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
