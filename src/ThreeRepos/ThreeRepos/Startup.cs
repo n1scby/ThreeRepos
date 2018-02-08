@@ -31,6 +31,9 @@ namespace ThreeRepos
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddDbContext<ResortContext>(options =>
+              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -41,7 +44,8 @@ namespace ThreeRepos
             services.AddMvc();
 
              //    services.AddScoped<IResortRepository, ResortRepositoryMemory>();
-                services.AddScoped<IResortRepository, ResortRepositoryADO>();
+             //   services.AddScoped<IResortRepository, ResortRepositoryADO>();
+            services.AddScoped<IResortRepository, ResortRepositoryEF>();
 
         }
 
