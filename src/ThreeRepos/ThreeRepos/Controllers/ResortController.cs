@@ -6,16 +6,19 @@ using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace ThreeRepos.Controllers
 {
     public class ResortController : Controller
     {
         private readonly IResortRepository _resortRepo;
+        private readonly ILogger _logger;
 
-        public ResortController(IResortRepository resortRepo)
+        public ResortController(IResortRepository resortRepo, ILogger<ResortController> logger)
         {
             _resortRepo = resortRepo;
+            _logger = logger;
         }
 
         // GET: Resort
@@ -43,17 +46,20 @@ namespace ThreeRepos.Controllers
         {
             if (!ModelState.IsValid)
             {
+                _logger.LogWarning("Model State is Invalid: {Id}", newResort.Id);
                 return View(newResort);
             }
-
+            
             try
             {
                 _resortRepo.Add(newResort);
+                _logger.LogInformation("New Resort Added. Id: {id}  Name: {name}", newResort.Id, newResort.Name);
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
+                _logger.LogError(ex.Message);
                 return View(newResort);
             }
         }
@@ -75,8 +81,10 @@ namespace ThreeRepos.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
+                _logger.LogError(ex.Message);
+
                 return View(updatedResort);
             }
         }
@@ -98,8 +106,10 @@ namespace ThreeRepos.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
+                _logger.LogError(ex.Message);
+
                 return View(deleteResort);
             }
         }
