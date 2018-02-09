@@ -4,12 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace ThreeRepos.Controllers
 {
+    [Authorize]
     public class ResortController : Controller
     {
         private readonly IResortRepository _resortRepo;
@@ -22,6 +24,7 @@ namespace ThreeRepos.Controllers
         }
 
         // GET: Resort
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View(_resortRepo.GetList());
