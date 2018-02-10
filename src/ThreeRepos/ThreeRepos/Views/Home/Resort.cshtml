@@ -1,0 +1,19 @@
+﻿@model ApplicationCore.Entities.Resort
+
+@{
+    ViewData["Title"] = "Resort";
+}
+
+<h2>Resort</h2>
+
+<div>
+    <h3>@Model.Name</h3>
+    <h4>Location: @Model.Location </h4>
+
+    <div>
+        <img src="~/images/@Model.Image" class="img-responsive site-image" />
+    </div>
+    <hr />
+    
+    <a asp-action="Index">Back to List</a>
+</div>
